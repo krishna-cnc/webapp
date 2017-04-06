@@ -1,0 +1,250 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Editable</h1>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Images</h4>
+            </div>
+            <div class="modal-body">
+                <form id="sent" class="clear">
+                    <div class="col-sm-9">
+                        <input ui-jq="filestyle" name="fileToUpload" ui-options="{icon: false, buttonName: 'btn-primary'}" type="file" ng-model="img_data" id="fileToUpload" placeholder="icon" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" >
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-addon btn-success upload_img">
+                            <i class="fa fa-arrow-circle-o-up"></i> Upload
+                        </button>
+                    </div>
+                    <div class="clear"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="wrapper-md" ng-controller="update_info">
+    <h4>Editable table</h4>
+    <ul class="nav nav-tabs multi_tab">
+        <li class="active" data-toggle="tab" href="#home">Hotel Detail</li>
+        <li data-toggle="tab" href="#menu1">Data List</li>
+        <li class="new_admin">ADD ANOTHER ADMIN</li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="home">
+            <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+
+                <!-- table -->
+                <table class="table table-bordered table-hover table-condensed bg-white-only">
+                    <tr>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable username (text with validation) -->
+                            <p>Email</p>
+                            <p id="email">{{ detail.email || 'empty' }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default reset_pass"  data-toggle="tooltip" title="Reset Link sent to the Registered User" ng-click="reset(detail.email)">Reset-Password</button></p>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable username (text with validation) -->
+                            <p>Hotel Name</p>
+                            <span editable-text="detail.Name" e-form="tableform" id="name">{{ detail.Name || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable status (select-local) -->
+                            <p>City</p>
+                            <span editable-text="detail.City" e-form="tableform" id="city">{{ detail.City || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable group (select-remote) -->
+                            <p>Address1</p>
+                            <span editable-text="detail.Address1" e-form="tableform" id="add">{{ detail.Address1 || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable group (select-remote) -->
+                            <p>Phone</p>
+                            <span editable-text="detail.Phone" e-form="tableform" id="phone">{{ detail.Phone || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable group (select-remote) -->
+                            <p>Latitude</p>
+                            <span editable-text="detail.Latitude" e-form="tableform" id="lat">{{ detail.Latitude || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable group (select-remote) -->
+                            <p>Longitude</p>
+                            <span editable-text="detail.Longitude" e-form="tableform" id="log">{{ detail.Longitude || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable group (select-remote) -->
+                            <p>Rating</p>
+                            <span editable-text="detail.Rating" e-form="tableform" id="rating">{{ detail.Rating || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable group (select-remote) -->
+                            <p>State</p>
+                            <span editable-text="detail.State" e-form="tableform" ng-module="state" id="state">{{ detail.State || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;">
+                            <!-- editable group (select-remote) -->
+                            <p>Zip Code</p>
+                            <span editable-text="detail.Zip" e-form="tableform" ng-module="zip" id="zip">{{ detail.Zip || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;" id="from_date">
+                            <!-- editable group (select-remote) -->
+                            <p>Booked Date(From)</p>
+                            <span editable-text="detail.fromdate" e-form="tableform" ng-module="from" id="from">{{ detail.fromdate * 1000 | date:'yyyy/MM/dd'  || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;" id="to_date">
+                            <p>Booked Date(To)</p>
+                            <span editable-text="detail.todate" e-form="tableform" ng-module="zip" id="to">{{ detail.todate * 1000 | date:'yyyy/MM/dd' || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;" class="edit_area">
+                            <p>Hotel Description</p>
+                            <span editable-textarea="detail.h_dec" e-form="tableform" ng-module="h_dec" id="h_dec">{{ detail.h_dec || 'empty' }}</span>
+                        </td>
+                        <td style="width:50%; display:inline-block;" class="edit_area">
+                            <p>Room Description</p>
+                            <span editable-textarea="detail.r_dec" e-form="tableform" ng-module="r_dec" id="r_dec">{{ detail.r_dec || 'empty' }}</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- buttons -->
+                <div class="btn-edit">
+                    <button type="button" class="btn btn-default show_tab" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+                        edit
+                    </button>
+                </div>
+                <div class="btn-form" ng-show="tableform.$visible">
+                    <!--<button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>-->
+                    <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary" id="update">save</button>
+                    <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel</button>
+                </div>
+            </form>
+
+            <div class="admin_list">
+                <h2>All Admin List</h2>
+                <div ng-repeat="x in hotel_sec" ng-if="x.hotel_id == hotel_id">
+                        <p>{{x.email}}</p>
+                </div>
+            </div>
+            <div class="img_detail">
+                <h4>Banner Image <span>Select any radio box for Display Image</span></h4>
+                <div>
+                    <div class="col_2 del_img" ng-repeat="x in img_list track by $index">
+                        <button type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <img ng-src="/ourwork/treverse/src/js/controllers/uploads/hotel/{{x}}" alt=""/>
+                        <input type="radio" name="d_img" value="{{x}}" id="{{$index}}" ng-checked="$first">
+                    </div>
+                    <button type="button" class="btn" data-toggle="modal" id="upload_btn" data-target="#myModal"><i class="fa fa-camera text-muted"></i></button>
+                </div>
+            </div>
+            <div class="hotel_am">
+                <h4>Hotel Amenities</h4>
+                <div class="ament_list"><!-- ng-repeat="z in hotel_am track by $index" -->
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Internet.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Internet">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Pool.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Pool">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Parking.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Parking">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Business.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Business">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Pet.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Pet">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Fitness.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Fitness">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Breakfast.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Breakfast">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Pets_no.png" alt="">
+                    <input type="checkbox" name="g_1" id="" value="Pets_no">
+                </div>
+                <div class="ament_list button_section">
+                    <button class="btn-default save_btn btn-primary">save</button>
+                </div>
+            </div>
+            <div class="room_am">
+                <h4>Room Amenities</h4>
+                <div class="ament_list"><!-- ng-repeat="z in hotel_am track by $index" -->
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Room.png" alt="">
+                    <input type="checkbox" name="g_2" id="" value="Room">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Blow.png" alt="">
+                    <input type="checkbox" name="g_2" id="" value="Blow">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Iron.png" alt="">
+                    <input type="checkbox" name="g_2" id="" value="Iron">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/HDTV.png" alt="">
+                    <input type="checkbox" name="g_2" id="" value="HDTV">
+                </div>
+                <div class="ament_list">
+                    <img src="http://codeandcore.com/ourwork/treverse/src/js/controllers/uploads/small_icon/Coffee.png" alt="">
+                    <input type="checkbox" name="g_2" id="" value="Coffee">
+                </div>
+                <div class="ament_list button_section">
+                    <button class="btn-default save_btn btn-primary">save</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <div class="table-responsive fix_height">
+                <table class="table table-striped b-t b-b">
+                    <thead>
+                        <tr>
+                            <th  style="width:20%">User Name</th>
+                            <!--<th  style="width:10%">Submit</th>-->
+                            <th  style="width:10%">Accept</th>
+                            <th  style="width:10%">Reject</th>
+                            <th  style="width:10%">OfferConform</th>
+                            <th  style="width:10%">Timeout</th>
+                            <th  style="width:10%">B G R N</th>
+                            <th  style="width:13%">Total Amount</th>
+                            <th  style="width:7%">Amount/Day</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="test" ng-repeat="x in filt_list | filter:{hotel_id:hotel_id}">
+                            <td>{{x.user}}</td>
+                            <!--<td>{{x.sub_date | date:'medium'}}</td>-->
+                            <td>{{x.accept | date:'medium'}}</td>
+                            <td>{{x.reject | date:'medium'}}</td>
+                            <td>{{x.conform | date:'medium'}}</td>
+                            <td>{{x.timeout | date:'medium'}}</td>
+                            <td>{{x.bed}},{{x.guest}},{{x.room}},{{x.night}}</td>
+                            <td>{{x.t_ammount}}</td>
+                            <td>{{x.ammount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-info">
+                Info! <strong>B G R N</strong> are considered as Bed,Guest,Room,Night 
+            </div>
+        </div>
+    </div>
+</div>

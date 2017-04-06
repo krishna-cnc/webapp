@@ -1,0 +1,69 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Treverse Hotels</h1>
+</div>
+<div class="wrapper-md" ng-controller="main_report">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Report List
+            <select class="report_select">
+                <option>Weekly</option>
+                <option>Daily</option>
+                <option>Monthly</option>
+                <option>Hourly</option>
+                <option>Quarterly</option>
+            </select>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-b">
+                <thead>
+                    <tr>
+                        <th style="width:20%">Total Submited</th>
+                        <th style="width:20%">Totel Accepted</th>
+                        <th style="width:20%">Total Rejected</th>
+                        <th style="width:20%">Total Timeout</th>
+                        <th style="width:20%">Total Amount of Offers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="h_list">
+                        <td>{{totle_ammount}}</td>
+                        <td>{{accepted}}</td>
+                        <td>{{rejected}}</td>
+                        <td>{{timeout}}</td>
+                        <td>$ {{_amo_ | number: 2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div class="panel panel-default top_city">
+            <div class="panel-heading">
+                Top 5 Search city
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped b-t b-b" ng-repeat="x in list_sec | orderBy:'-count' | limitTo:5">
+                    <tbody>
+                        <tr class="h_list">
+                            <td>{{x.city}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default top_city">
+            <div class="panel-heading">
+                Missed Revenue Totals
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped b-t b-b">
+                    <tbody>
+                        <tr class="h_list">
+                            <td>{{_miss_ | number: 2}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

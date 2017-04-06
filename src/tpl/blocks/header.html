@@ -1,0 +1,55 @@
+<!-- navbar header -->
+<div class="navbar-header {{app.settings.navbarHeaderColor}}">
+    <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+        <i class="glyphicon glyphicon-cog"></i>
+    </button>
+    <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll-to="app">
+        <i class="glyphicon glyphicon-align-justify"></i>
+    </button>
+    <!-- brand -->
+    <a href="#/" class="navbar-brand bg-primary">
+        <img src="img/admin_logo_1.png" alt="." >
+        <span class="hidden-folded m-l-xs  text-lt"><img src="img/web_logo_1.png" class="we_img" alt=""></span>
+    </a>
+    <!-- / brand -->
+</div>
+<!-- / navbar header -->
+
+<!-- navbar collapse -->
+<div class="collapse pos-rlt navbar-collapse box-shadow {{app.settings.navbarCollapseColor}}">
+    <!-- buttons -->
+    <div class="nav navbar-nav hidden-xs">
+        <a href class="btn no-shadow navbar-btn" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+            <i class="fa {{app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
+        </a>
+    </div>
+    <!-- / buttons -->
+
+    <!-- link and dropdown -->
+
+    <!-- / link and dropdown -->
+
+    <!-- search form -->
+    <!-- / search form -->
+
+    <!-- nabar right -->
+    <ul class="nav navbar-nav navbar-right" ng-controller="logout">
+        <li class="hidden-xs">
+            <a ui-fullscreen></a>
+        </li>
+        <li class="dropdown" dropdown>
+            <a ui-sref="access.signin" ng-click="logout()">Logout</a>
+            <!--<a href class="dropdown-toggle clear" dropdown-toggle>
+<span class="hidden-sm hidden-md">John.Smith</span> <b class="caret"></b>
+</a>-->
+            <!-- dropdown -->
+            <!-- / dropdown -->
+        </li>
+        <li>
+            <a href="javascript:viod(0)" ng-click="reset_pass()">Reset-Password</a>
+        </li>
+    </ul>
+    <!-- / navbar right -->
+
+</div>
+<!-- / navbar collapse -->

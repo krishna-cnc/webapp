@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+    <head>
+        <meta charset="utf-8" />
+        <title>Angular version | Angulr</title>
+        <meta name="description" content="Angularjs, Html5, Music, Landing, 4 in 1 ui kits package" />
+        <meta name="keywords" content="AngularJS, angular, bootstrap, admin, dashboard, panel, app, charts, components,flat, responsive, layout, kit, ui, route, web, app, widgets" />
+        <meta name="keywords" content="ng-map,AngularJS,center">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link rel="stylesheet" href="../libs/assets/animate.css/animate.css" type="text/css" />
+        <link rel="stylesheet" href="../libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
+        <link rel="stylesheet" href="../libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />
+        <link rel="stylesheet" href="../libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="css/bootstrap-datetimepicker.css" type="text/css" />
+
+        <!-- build:css css/app.min.css -->
+        <link rel="stylesheet" href="css/font.css" type="text/css" />
+        <link rel="stylesheet" href="css/app.css" type="text/css" />
+        <!-- endbuild -->
+    </head>
+    <body ng-controller="AppCtrl">
+
+        <!-- Another Admin Hotel -->
+        <div class="overlay" id="add_admin" ng-controller="nother_admin">
+            <div class="popup">
+                <h2>ADD ANOTHER ADMIN</h2>
+                <label><input type="email" id="another_admin" placeholder="Email"></label>
+                <label><input type="password" id="another_password" placeholder="Password"></label>
+                <label><input type="password" id="another_repeat" placeholder="Repeat Password"></label>
+                <button class="create_admin">CREATE</button><button class="close_popup">CLOSE</button>
+            </div>
+        </div>
+
+
+        <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view></div>
+
+        <!-- build:js js/app.angular.js -->
+        <!-- jQuery -->
+        <script src="../libs/jquery/jquery/dist/jquery.js"></script>
+        <!-- Bootstrap -->
+        <script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+
+        <!-- Angular -->
+        <script src="../libs/angular/angular/angular.js"></script>
+        <script src="../libs/angular/angular-animate/angular-animate.js"></script>
+        <script src="../libs/angular/angular-aria/angular-aria.js"></script>
+        <script src="../libs/angular/angular-cookies/angular-cookies.js"></script>
+        <script src="../libs/angular/angular-messages/angular-messages.js"></script>
+        <script src="../libs/angular/angular-resource/angular-resource.js"></script>
+        <script src="../libs/angular/angular-sanitize/angular-sanitize.js"></script>
+        <script src="../libs/angular/angular-touch/angular-touch.js"></script>
+        <script src="../libs/angular/angular-ui-router/release/angular-ui-router.js"></script> 
+        <script src="../libs/angular/ngstorage/ngStorage.js"></script>
+        <script src="../libs/angular/angular-ui-utils/ui-utils.js"></script>
+        <!-- bootstrap -->
+        <script src="../libs/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <!-- lazyload -->
+        <script src="../libs/angular/oclazyload/dist/ocLazyLoad.js"></script>
+        <!-- translate -->
+        <script src="../libs/angular/angular-translate/angular-translate.js"></script>
+        <script src="../libs/angular/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+        <script src="../libs/angular/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+        <script src="../libs/angular/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+
+        <!-- Firebase -->
+        <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyBw2D8xo-6GS4KSnord6t3YExd8qDvBJLU",
+                authDomain: "treverse-5114b.firebaseapp.com",
+                databaseURL: "https://treverse-5114b.firebaseio.com",
+                storageBucket: "treverse-5114b.appspot.com",
+                messagingSenderId: "308547364436"
+            };
+            firebase.initializeApp(config);
+        </script>
+
+        <!-- App -->
+        <script src="js/moment.js"></script>
+        <script src="js/bootstrap-datetimepicker.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/config.lazyload.js"></script>
+        <script src="js/config.router.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/services/ui-load.js"></script>
+        <script src="js/filters/fromNow.js"></script>
+        <script src="js/directives/setnganimate.js"></script>
+        <script src="js/directives/ui-butterbar.js"></script>
+        <script src="js/directives/ui-focus.js"></script>
+        <script src="js/directives/ui-fullscreen.js"></script>
+        <script src="js/directives/ui-jq.js"></script>
+        <script src="js/directives/ui-module.js"></script>
+        <script src="js/directives/ui-nav.js"></script>
+        <script src="js/directives/ui-scroll.js"></script>
+        <script src="js/directives/ui-shift.js"></script>
+        <script src="js/directives/ui-toggleclass.js"></script>
+        <script src="js/Angular-Paging-master/dist/paging.js"></script>
+        <script src="js/controllers/bootstrap.js"></script>
+        <script src="js/controllers/all.js"></script>
+        <script src="js/controllers/table.js"></script>
+        <script src='http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&key=AIzaSyCsiweCZyd9MOFsYQEnhTJa1sTEA3dl4CI'></script>
+        <!--<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&libraries=us&key=AIzaSyCsiweCZyd9MOFsYQEnhTJa1sTEA3dl4CI"></script>-->
+        <script src="https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js"></script>
+        <script src="js/ngAutocomplete.js"></script>
+        <!-- endbuild -->
+        <!-- Lazy loading -->
+    </body>
+</html>

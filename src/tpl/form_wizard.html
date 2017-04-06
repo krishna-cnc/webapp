@@ -1,0 +1,370 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Add Hotel</h1>
+    <button type="button" class="btn btn-info btn-lg hide on_click" data-toggle="modal" data-target="#myModal">Open Modal</button>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">warning</h4>
+            </div>
+            <div class="modal-body">
+                <p>You reach maximum number of Images, You can upload Maximum 10 Images Only</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="wrapper-md" ng-controller="FormDemoCtrl">
+    <tabset class="tab-container" ng-init="steps={percent:20, step1:true, step2:false, step3:false}">
+        <tab heading="Step 1: Hotel Information" active="steps.step1" select="steps.percent=10">
+            <p class="m-b">Fill the detail of new hotel (Please fill valid values to go into next steps)</p>
+            <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+            <h4>Basic detail</h4>
+            <form name="step1" class="form-validation">
+                <p class="m-t">Hotel Name:</p>
+                <input type="text" name="name" class="form-control" ng-model="name" required>
+                <p class="m-t">City name:</p>
+                <input type="text" name="city" class="form-control" ng-model="city" required>
+                <p class="m-t">State name:</p>
+                <input type="text" name="state" class="form-control" ng-model="state" required>
+                <p class="m-t">Zip-code:</p>
+                <input type="text" name="zip" class="form-control" ng-model="zip" required>
+                <p class="m-t">Contact-Number:</p>
+                <input type="text" name="contact" class="form-control" ng-model="contact" required>
+                <p class="m-t">Address 1:</p>
+                <input type="text" name="address1" class="form-control" ng-model="address1" required>
+                <p class="m-t">Address 2:</p>
+                <input type="text" name="address1" class="form-control" ng-model="address1" required>
+                <p class="m-t">Email (This username will be provided to hotel staff to access hotel app):</p>
+                <input type="text" name="email" class="form-control" ng-model="username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                <p class="m-t">Password (This password will be provided to hotel staff to access hotel app):</p>
+                <input type="password" name="password" class="form-control"  required ng-model="password" />
+                <p class="m-t">Retype Password:</p>
+                <input type="password" name="re-password" class="form-control" required />
+
+                <!--<input type="email" name="email" class="form-control" ng-model="email" required ng-change="step1.email.$valid ? (steps.percent=30) : (steps.percent=20)">-->
+                <p class="m-t">Hotel website:</p>
+                <input type="url" name="url" placeholder="http://" class="form-control" ng-model="website" required>
+                <div class="m-t m-b">
+                    <button type="submit" ng-disabled="step1.$invalid" class="btn btn-default btn-rounded" ng-click="steps.step2=true; reRednerMap()">Next</button>
+                </div>
+            </form>
+        </tab>
+        <tab heading="Step 2: Hotel & Room Details"  active="steps.step2" select="steps.percent=30" ng-click="reRednerMap()" disabled="step1.$invalid">
+            <form name="step2" class="form-validation form-horizontal">
+                <p class="m-b">Continue the next step</p>
+                <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Rating</label>
+                        <div class="col-sm-10">
+                            <input id="slider" ui-jq="slider"  ui-event="{slideStop: 'alertChange($event)'}"  ui-options="{
+                                                                                                                          min: 0,
+                                                                                                                          max: 5,
+                                                                                                                          step: 0.5,
+                                                                                                                          value: {{_val_}}
+                                                                                                                          }" class="slider slider-horizontal form-control" type="text">&nbsp;&nbsp;&nbsp;&nbsp;{{val}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Longitude</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="long" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Latitude</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="lat" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"> <h4 class="text-primary">Hotel Detail</h4></label>
+                        <div class="col-sm-10">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control " ng-model="h_dec" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Amenities</label>
+                        <div class="col-sm-10 hote_am">
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Internet" class="hotel_am" checked="" />
+                                    <i></i>
+                                    Internet
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Pool" class="hotel_am">
+                                    <i></i>
+                                    Pool & Spa
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Parking" class="hotel_am">
+                                    <i></i>
+                                    Free Parking
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Business" class="hotel_am">
+                                    <i></i>
+                                    Business Center
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Pet" class="hotel_am">
+                                    <i></i>
+                                    Pet Friendly
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Fitness" class="hotel_am">
+                                    <i></i>
+                                    Fitness Center
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Breakfast" class="hotel_am">
+                                    <i></i>
+                                    Free Breakfast
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="Pets_no" class="hotel_am">
+                                    <i></i>
+                                    No Pets
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Search Area</label>
+                            <div class="col-sm-10">
+                                <input ng-model="vm.address" id="auto" class="form-control" />
+                            </div>
+                        </div>
+                        <ng-map id="barmap" center="{{lat || -25.363882}} ,{{long || 131.044922}}" zoom="10" on-click="getpos($event)" default-style="true">
+                            <marker position="{{lat || -25.363882}} ,{{long || 131.044922}}" title="Hello World!" on-dragend="getpos($event)" 
+                                    animation="Animation.BOUNCE" animation="DROP" draggable="true"></marker>
+                        </ng-map>
+                        <p>Latitude & Longitude</p>
+                        {{latlng}}
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> <h4 class="text-primary">Room Detail</h4></label>
+                    <div class="col-sm-10">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control " ng-model="r_dec" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Amenities</label>
+                    <div class="col-sm-10">
+                        <div class="checkbox">
+                            <label class="i-checks">
+                                <input type="checkbox" value="Room" class="room_am" checked="">
+                                <i></i>
+                                Room Service
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="i-checks">
+                                <input type="checkbox" value="Blow" class="room_am">
+                                <i></i>
+                                Blow Dryer
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="i-checks">
+                                <input type="checkbox" value="Iron" class="room_am">
+                                <i></i>
+                                Iron
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="i-checks">
+                                <input type="checkbox" value="HDTV" class="room_am">
+                                <i></i>
+                                HDTV
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="i-checks">
+                                <input type="checkbox" value="Coffee" class="room_am">
+                                <i></i>
+                                Coffee Maker
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="group-info">
+                    <div class="col-sm-12 col-md-5">
+                        <label class="col-sm-3 control-label">(Booked-Date)From</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control " ng-model="fomr_date" id="fomr_dates">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-5">
+                        <label class="col-sm-3 control-label">(Booked-Date)To</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="to_date" id="to_date">
+                        </div>
+                    </div>
+                </div> -->
+                <div class="clearfix"></div>
+                <div class="m-t m-b">
+                    <button type="button" class="btn btn-default btn-rounded" ng-click="steps.step1=true">Prev</button>
+                    <button type="submit" ng-disabled="step2.$invalid" class="btn btn-default btn-rounded" ng-click="steps.step3=true">Next</button>
+                </div>
+            </form>
+        </tab>
+        <tab heading="Step 3: Photo Management" active="steps.step3" select="steps.percent=60"><!--disabled="step2.$invalid"-->
+            <h3><b>Upload hotel images</b></h3>
+            <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+            <div class="hbox hbox-auto-xs hbox-auto-sm"  nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+                <div class="col w-lg bg-light b-r bg-auto">
+                    <div class="wrapper-md dker b-b">
+                        <h3 class="m-n font-thin">Select files</h3>
+                    </div>
+                    <div class="wrapper-md">      
+                        <div ng-show="uploader.isHTML5" class="m-b-md">
+                            <!-- 3. nv-file-over uploader="link" over-class="className" -->
+                            <div class="b-a b-2x b-dashed wrapper-lg bg-white text-center m-b" nv-file-over="" over-class="b-info" uploader="uploader">
+                                Drop the images here.
+                            </div>
+                        </div>
+                        <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                        <p>Or can add image from this button</p>
+                        <input type="file" nv-file-select="" uploader="uploader" multiple  />
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="wrapper-md bg-light dk b-b">
+                        <span class="pull-right m-t-xs">Queue length: <b class="badge bg-info">{{ uploader.queue.length }}</b></span>
+                        <h3 class="m-n font-thin">Upload queue</h3>      
+                    </div>
+                    <div class="wrapper-md">
+                        <table class="table bg-white-only b-a">
+                            <thead>
+                                <tr>
+                                    <th width="50%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th ng-show="uploader.isHTML5">Progress</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploader.isHTML5">
+                                        <div class="progress progress-sm m-b-none m-t-xs">
+                                            <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                            Upload
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                            Cancel
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                                            Remove
+                                        </button>
+                                        <div class="checkbox-inline">
+                                            <input type="radio" name="a" class="img_radio" value="{{$index}}">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <div>
+                                <p>Queue progress:</p>
+                                <div class="progress bg-light dker" style="">
+                                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-addon btn-success" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                <i class="fa fa-arrow-circle-o-up"></i> Upload all
+                            </button>
+                            <button type="button" class="btn btn-addon btn-warning" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                <i class="fa fa-ban"></i> Cancel all
+                            </button>
+                            <button type="button" class="btn btn-addon btn-danger" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                <i class="fa fa-trash-o"></i> Remove all
+                            </button>
+                            <p class="text-muted m-t-xl">Note: Please upload images only</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <p class="m-t">Icon:</p>
+                <form id="sent" class="clear">
+                    <div class="col-sm-9">
+                        <input ui-jq="filestyle" name="fileToUpload" ui-options="{icon: false, buttonName: 'btn-primary'}" type="file" ng-model="img_data" id="filestyle-0" placeholder="icon" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);" >
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-addon btn-success">
+                            <i class="fa fa-arrow-circle-o-up"></i> Upload
+                        </button>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="alert alert-success file_upload hide_ext">
+                        <a href="javascript:void(0)" class="close" data-dismiss="alert">&times;</a>
+                        <strong>Success!</strong> Your File has been successfully uploaded.
+                    </div>
+                </form>
+            </div>
+            <div class="alert alert-danger fil_img hide_ext">
+                <a href="javascript:void(0)" class="close" data-dismiss="alert">&times;</a>
+                <strong>Note!</strong> Add The Images or Icons
+            </div>
+            <div class="m-t m-b">
+                <button type="button" class="btn btn-default btn-rounded" ng-click="steps.step2=true">Prev</button>
+                <button type="button" class="btn btn-default btn-rounded" id="finesh" ng-click="steps.percent=100; submitdata(name,city,state,address1,username,password,website,val,long,lat,h_dec,r_dec,zip,contact,fomr_date,to_date)">Click me to Finish</button>
+            </div>
+        </tab>
+    </tabset>
+</div>

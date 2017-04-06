@@ -1,0 +1,51 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Treverse Hotels</h1>
+</div>
+<div class="wrapper-md" ng-controller="tab_data">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            List of Hotel
+            <div class="pull-right list_box">
+                <div class="input-group">
+                    <input type="text" class="input-sm form-control" ng-model="fil_val" placeholder="Hotel Search">
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-b">
+                <thead>
+                    <tr>
+                        <th  style="width:25%">Hotel name</th>
+                        <th  style="width:10%">City</th>
+                        <th  style="width:10%">State</th>
+                        <th  style="width:13%">Phone</th>
+                        <th  style="width:7%">Rating</th>
+                        <th  style="width:16%">Address1</th>
+                        <th  style="width:10%"></th>
+                        <th  style="width:10%"></th>
+                        <th  style="width:10%">Report</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="h_list" ng-repeat="contact in filteredTodos | filter:{ Name:fil_val,archive:false }"  ng-class="{'disable':contact.disable == true}">
+                        <td><a href="#/app/table/edit?hotel={{contact.h_id}}">{{contact.Name}}</a></td>
+                        <td>{{contact.City}}</td>
+                        <td>{{contact.State}}</td>
+                        <td>{{contact.Phone}}</td>
+                        <td>{{contact.Rating}}</td>
+                        <td>{{contact.Address1}}</td>
+                        <td><a href="javascript:void(0)" id="{{contact.h_id}}" class="hot_del Danger"><i class="glyphicon glyphicon-trash"></i> Delete</a></td>
+                        <td><a href="javascript:void(0)" data-id_d="{{contact.h_id}}" class="dis_btn Danger"><!--<img src="img/desable.png" alt="">--> Disable</a></td>
+                        <td><a href="#/app/report?list={{contact.h_id}}" class="report" data-id="{{contact.h_id}}"><i class="icon-doc"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <pagination 
+                    ng-model="currentPage"
+                    total-items="pg_list"
+                    max-size="maxSize"  
+                    boundary-links="false">
+        </pagination>
+    </div>
+</div>
