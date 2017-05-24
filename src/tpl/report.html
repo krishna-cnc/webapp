@@ -1,16 +1,17 @@
-<div class="bg-light lter b-b wrapper-md">
-    <h1 class="m-n font-thin h3">Treverse Hotels</h1>
+<div class="bg-light lter b-b wrapper-md" ng-controller="report">
+    <h1 class="m-n font-thin h3">{{name_ || 'Treverse Hotel'}}</h1>
 </div>
 <div class="wrapper-md" ng-controller="report">
     <div class="panel panel-default">
         <div class="panel-heading">
             Report List
             <select class="report_select">
-                <option>Weekly</option>
-                <option>Daily</option>
-                <option>Monthly</option>
                 <option>Hourly</option>
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
                 <option>Quarterly</option>
+                <option>Annually</option>
             </select>
         </div>
         <div class="table-responsive">
@@ -36,7 +37,7 @@
             </table>
         </div>
     </div>
-    <div class="cf">
+    <div class="cf for_admin">
         <div class="panel panel-default top_city">
             <div class="panel-heading">
                 Top 5 Search city
@@ -70,7 +71,7 @@
                 Total Number of times Hotel is selected
             </div>
             <div class="table-responsive">
-                <table class="table table-striped b-t b-b" ng-repeat="(key , z) in select_count">
+                <table class="table table-striped b-t b-b" ng-repeat="(key, z) in result track by $index">
                     <tbody>
                         <tr class="h_list total_selected">
                             <td ng-repeat="x in hotel_s" ng-if="key == x.h_id">
@@ -78,7 +79,7 @@
                                     {{x.Name}}
                                 </span>
                                 <span>
-                                    :  {{z.count}}
+                                    :  {{z}}
                                 </span>
                             </td>
                         </tr>

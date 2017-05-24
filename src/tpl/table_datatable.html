@@ -35,8 +35,8 @@
                         <td>{{contact.Rating}}</td>
                         <td>{{contact.Address1}}</td>
                         <td><a href="javascript:void(0)" id="{{contact.h_id}}" class="hot_del Danger"><i class="glyphicon glyphicon-trash"></i> Delete</a></td>
-                        <td><a href="javascript:void(0)" data-id_d="{{contact.h_id}}" class="dis_btn Danger"><!--<img src="img/desable.png" alt="">--> Disable</a></td>
-                        <td><a href="#/app/report?list={{contact.h_id}}" class="report" data-id="{{contact.h_id}}"><i class="icon-doc"></i></a></td>
+                        <td><a href="javascript:void(0)" data-id_d="{{contact.h_id}}" class="dis_btn Danger" ng-class="{'check':contact.disable == true}"><!--<img src="img/desable.png" alt="">--><span ng-if="contact.disable == true">Enable</span><span ng-if="contact.disable != true"> Disable</span></a></td>
+                        <td><a href="#/app/report?list={{contact.h_id}}&name={{contact.Name}}" class="report" data-id="{{contact.h_id}}"><i class="icon-doc"></i></a></td>
                     </tr>
                 </tbody>
             </table>

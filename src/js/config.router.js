@@ -11,8 +11,19 @@ angular.module('app')
          if(window.location.href.indexOf("material") > 0){
              layout = "tpl/blocks/material.layout.html";
              if(window.localStorage.getItem('email') != null){
-                 $urlRouterProvider
-                     .otherwise('app/table/hotel_list');
+                 if(window.localStorage.getItem('type') == "admin"){
+                     $('body').addClass('ng-admin')
+                     window.location = "#/app/report?list="+window.localStorage.getItem('h_id')
+                     setTimeout(function(){
+                         $('.ng-admin .new_admin ,.ng-admin .admin_list,.ng-admin .navi .nav').remove()  
+                     },150)
+                 }
+                 else{
+                     $('body').removeClass('ng-admin')
+                     $urlRouterProvider
+                         .otherwise('app/table/hotel_list');
+                     window.localStorage.setItem('type',null)
+                 }
              }
              else{
                  window.location = '#/access/signin'
@@ -20,8 +31,13 @@ angular.module('app')
          }else{
              console.log(localStorage.getItem('email'))
              if(localStorage.getItem('email') != null){
-                 $urlRouterProvider
-                     .otherwise('app/table/hotel_list');
+                 if(window.localStorage.getItem('type') =="admin"){
+                     window.location = "#/app/report?list="+window.localStorage.getItem('h_id')
+                 }
+                 else{
+                     $urlRouterProvider
+                         .otherwise('app/table/hotel_list');
+                 }
              }
              else{
 
@@ -495,12 +511,24 @@ angular.module('app')
          $rootScope.$state = $state;
          $rootScope.$stateParams = $stateParams;
          $rootScope.$on('$locationChangeStart', function () {
+             if(localStorage.getItem('email') != null){
+                 if(window.localStorage.getItem('type') == "admin"){
+                     $('body').addClass('ng-admin')
+                     setTimeout(function(){
+                         $('.ng-admin .new_admin').remove()  
+                         $('.ng-admin .admin_list').remove()  
+                         $('.ng-admin .navi .nav').remove()  
+                     },150)
+                 }
+                 else{
+                     $('body').removeClass('ng-admin')
+                 }
+             }
+
              if(window.localStorage.getItem('email') == null && localStorage.getItem('email') == ''){
                  $state.go('access.signin');
              }
-             else{
 
-             }
 
          });
      }

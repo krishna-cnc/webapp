@@ -210,7 +210,7 @@ app.controller('FormDemoCtrl', ['$scope','FileUploader','$http','NgMap','$timeou
             console.log($(this).val());
         }
     })*/
-    $scope.img_no;
+    $scope.img_no = 0;
     $(document).on('change','input.img_radio:radio',function(){
         $scope.img_no = $("input.img_radio:checked").val();
     });

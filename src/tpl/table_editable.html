@@ -128,8 +128,8 @@
 
             <div class="admin_list">
                 <h2>All Admin List</h2>
-                <div ng-repeat="x in hotel_sec" ng-if="x.hotel_id == hotel_id">
-                        <p>{{x.email}}</p>
+                <div ng-repeat="(key , x) in hotel_sec" ng-if="x.hotel_id == hotel_id">
+                    <p><span>{{x.email}}</span> <button ng-if="email_id != x.email" type="button" class="btn btn-default reset_pass"  data-toggle="tooltip" title="Reset Link sent to the Registered User" ng-click="reset(x.email)">Reset-Password</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default reset_pass" ng-class="{'del_hot':email_id != x.email}" data-hotel-id="x.hotel_id" ng-click="delete(key)">Delete</button> </p>
                 </div>
             </div>
             <div class="img_detail">

@@ -3,6 +3,8 @@ app.controller('logout',function($scope,$state){
         window.localStorage.clear();
         firebase.auth().signOut().then(function() {
             console.log('Signed Out');
+            console.log(window.localStorage.getItem('type'))
+            window.location = "#/access/signin"
             $state.go('app.signin')
         }, function(error) {
             console.error('Sign Out Error', error);
@@ -29,7 +31,6 @@ app.controller('tab_data',function($scope,$http,$timeout,$state){
 
     firebase.database().ref().child('hotel/').on('value',function(data){
         $scope.pg_list = data.numChildren()
-        console.log($scope.currentPage)
         var dt = data.val()
         $scope.new_data= []
         $scope.nav = $scope.new_data.length
@@ -40,7 +41,6 @@ app.controller('tab_data',function($scope,$http,$timeout,$state){
         $scope.$watch('currentPage + numPerPage', function() {
             var begin = (($scope.currentPage - 1) * $scope.numPerPage)
             , end = begin + $scope.numPerPage;
-            console.log(begin,end)
             $scope.filteredTodos = $scope.new_data.slice(begin,end)
         });
 
@@ -60,9 +60,16 @@ app.controller('tab_data',function($scope,$http,$timeout,$state){
     })
     $(document).on('click','.dis_btn',function(){
         var id = $(this).attr('data-id_d');
-        firebase.database().ref().child('hotel/'+id).update({
-            disable:true
-        })    
+        if($(this).hasClass('check')){
+            firebase.database().ref().child('hotel/'+id).update({
+                disable:false   
+            })
+        }
+        else{
+            firebase.database().ref().child('hotel/'+id).update({
+                disable:true
+            })
+        }
     })
 
     /*$(document).on('click','a[data-id]',function(){
@@ -72,16 +79,49 @@ app.controller('tab_data',function($scope,$http,$timeout,$state){
 
 
 });
+app.controller('user_admin_nav',function($scope){
+    $scope.goto_page =function(){
+        window.location = "#/app/table/edit?hotel="+window.localStorage.getItem('h_id')
+    }
+    $scope.report =function(){
+        window.location = "#/app/report?list="+window.localStorage.getItem('h_id')
+    }
+})
+
 app.controller('update_info',function($scope,$location){
+
+    setTimeout(function(){
+        $('.ng-admin .new_admin').remove()  
+        $('.ng-admin .admin_list').remove()  
+        $('.ng-admin .navi .nav').remove()  
+    },150)
     var hotel_id = $location.search().hotel
     console.log(hotel_id)
     $scope.hotel_id = $location.search().hotel
     firebase.database().ref().child('admin').on('value',function(data){
         $scope.hotel_sec = data.val()
     })
-    firebase.database().ref().child('hotel/'+hotel_id).on('value',function(data){
+
+
+    $(document).on('click','.del_hot',function(){
+        var hot_id = $(this).attr('data-hotel-id')
+        firebase.datavase().ref().child('hotel/'+hot_id).remove()
+        console.log(hot_id)
+    })
+    $scope.delete = function(key){
+        firebase.database().ref().child('admin/'+key).remove();
+    }
+    var _xx_;
+    if(window.localStorage.getItem('type')=="admin"){
+        _xx_ = window.localStorage.getItem('h_id');
+    }
+    else{
+        _xx_ = hotel_id;
+    }
+    firebase.database().ref().child('hotel/'+_xx_).on('value',function(data){
         $scope.detail = data.val();
         $scope.img_list = $scope.detail.list_img
+        $scope.email_id = $scope.detail.email
         $scope.hotel_am = $scope.detail.hotel_am
         $scope.room_am = $scope.detail.room_am
         var _length_ = $scope.hotel_am.length;
@@ -167,10 +207,37 @@ app.controller('update_info',function($scope,$location){
         r_dec = $('#r_dec').text()
         h_dec = $('#h_dec').text()
     })
+    //$('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').parent().addClass('dec')
+    /*$('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').parent().remove()*/
+
+    if(window.localStorage.getItem('type') == "admin"){
+        $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').parent().addClass('dec')
+        $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').next().children().children('input').prop( "disabled", true );
+        $('#lat').next().children().children('input').attr('id',"focus")
+        $('#focus').focus();
+    }
+    else{
+        $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').parent().removeClass('dec')
+        $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').next().children().children('input').prop( "disabled", false );
+    }
 
     $(document).on('click','.show_tab',function(){
         $('#from_date .editable-input').val($('#from').text())
         $('#to_date .editable-input').val($('#to').text())
+        if(window.localStorage.getItem('type') == "admin"){
+            $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').parent().addClass('dec')
+            $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').next().children().children('input').prop( "disabled", true );
+            $('#lat').next().children().children('input').attr('id',"focus")
+            $('#focus').focus();
+        }
+        else{
+            $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').parent().removeClass('dec')
+            $('#name,#city,#add,#phone,#state,#zip,#h_dec,#r_dec').next().children().children('input').prop( "disabled", false );
+        }
+
+
+
+
     })
 
 
@@ -214,6 +281,7 @@ app.controller('update_info',function($scope,$location){
         })
         setTimeout(function(){
             console.log(name,city,add,phone,lat,log,rating,state)
+            console.log(hotel_id)
             firebase.database().ref().child('hotel/'+hotel_id).update({
                 Name: name,
                 City: city,
@@ -222,14 +290,13 @@ app.controller('update_info',function($scope,$location){
                 Latitude: lat,
                 Longitude: log,
                 Rating: rating,
-                state: state,
+                State: state,
                 Zip:zip,
                 DisplayImage:d_img,
                 h_dec:h_dec,
                 r_dec:r_dec
-            })
-
-        },1000)
+            },1000)
+        })
     })
 
 
@@ -346,15 +413,25 @@ app.controller('fag_pass',function($scope){
 })
 
 app.controller('nother_admin',function($scope,$location){
+
+    setTimeout(function(){
+        $('.ng-admin .new_admin').remove()  
+        $('.ng-admin .admin_list').remove()  
+        $('.ng-admin .navi .nav').remove()  
+    },150)
+
     $(document).on('click','.create_admin',function(){
         if($('#add_admin input').val() != ""){
             if($('#another_password').val() == $('#another_repeat').val()){
                 var email = $('#another_admin').val();
                 var pass = $('#another_password').val();
                 var threshold_ ;
+                console.log($location.search().hotel)
                 firebase.database().ref().child('admin/'+$location.search().hotel).on('value',function(data){
                     var _z_ = data.val()
+                    console.log(_z_)
                     threshold_ = _z_.threshold
+                    console.log(threshold_)
                 })
                 firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(){
                     var new_date = new Date().getTime();
@@ -413,6 +490,15 @@ app.controller('nother_admin',function($scope,$location){
 
 app.controller('report',function($scope,$location){
 
+    $scope._id_ =  $location.search().list
+
+    if(window.localStorage.getItem('hot_name') == null || window.localStorage.getItem('hot_name') == "" || window.localStorage.getItem('hot_name') == undefined ){
+        $scope.name_ =  $location.search().name   
+    }
+    else{
+        $scope.name_ = window.localStorage.getItem('hot_name');
+        /*$('.ng-admin .for_admin').remove()*/
+    }
     var maxPoints = new Array();
     var scoreByPattern = []
     firebase.database().ref().child('search_city/').once('value',function(data){
@@ -424,8 +510,6 @@ app.controller('report',function($scope,$location){
             })
             /*console.log(x,_res_[x].count)*/
         }
-
-        console.log(scoreByPattern)
         $scope.list_sec = scoreByPattern;
         $scope.$apply()
     })
@@ -451,9 +535,13 @@ app.controller('report',function($scope,$location){
     _d_.setHours(_d_.getHours() - 24);
     $scope.daily = Math.round(new Date(_d_).getTime());
 
+    var _anu_ = new Date();
+    _anu_.setDate(_anu_.getDate() - 365);
+    $scope.anu = Math.round(new Date(_anu_).getTime());
+
 
     /**/
-    get_data($scope.prev_date)
+    get_data($scope.hourly)
     /**/
     $(document).on('change','.report_select',function(){
         var $this = $(this).val()
@@ -475,6 +563,9 @@ app.controller('report',function($scope,$location){
         if($this == 'Monthly'){
             get_data($scope.month)
         }
+        if($this == 'Annually'){
+            get_data($scope.anu)
+        }
     })
 
     function get_data(x){
@@ -482,6 +573,7 @@ app.controller('report',function($scope,$location){
         $scope.$watch(function(){
             $scope.id = $location.search().list;
         })
+        var _array_ = [];
         firebase.database().ref().child('track').on('value',function(data){
             var _i_ = 0;
             var _j_ = 0;
@@ -494,6 +586,11 @@ app.controller('report',function($scope,$location){
                 if($scope.list[_x_].sub_date >= x){
                     if($scope.id == $scope.list[_x_].hotel_id)
                     {
+                        _array_.push($scope.list[_x_].hotel_id)
+                        if($scope.list[_x_].hotel_id){
+                            _array_.push($scope.list[_x_].hotel_id)
+                        }
+
                         if($scope.list[_x_].sub_date != "-" && $scope.list[_x_].sub_date != "Pending"){
                             _i_ ++;
                         }
@@ -509,12 +606,19 @@ app.controller('report',function($scope,$location){
                         if($scope.list[_x_].ammount != "-" && $scope.list[_x_].ammount != "Pending" && $scope.list[_x_].ammount != ""){
                             _amo_ = _amo_ + $scope.list[_x_].ammount
                         }
+                        if($scope.list[_x_].reject == "-" || $scope.list[_x_].reject == ""){
+                            _miss_ = _miss_ + $scope.list[_x_].ammount
+                        }
                     }
                 }
-                if($scope.list[_x_].reject == "-" || $scope.list[_x_].reject == ""){
-                    _miss_ = _miss_ + $scope.list[_x_].ammount
-                }
             }
+            var result = { };
+            for(var i = 0; i < _array_.length; ++i) {
+                if(!result[_array_[i]])
+                    result[_array_[i]] = 0;
+                ++result[_array_[i]];
+            }
+            $scope.result = result
             setTimeout(function(){
                 $scope.totle_ammount = _i_;
                 $scope.accepted = _j_;
@@ -550,8 +654,6 @@ app.controller('main_report',function($scope,$location){
             })
             /*console.log(x,_res_[x].count)*/
         }
-
-        console.log(scoreByPattern)
         $scope.list_sec = scoreByPattern;
         $scope.$apply()
     })
@@ -568,8 +670,12 @@ app.controller('main_report',function($scope,$location){
     /*$scope.id = $location.search().list;*/
 
     var _query_ = new Date();
-    _query_.setDate(_month_.getDate() - 90);
+    _query_.setDate(_query_.getDate() - 90);
     $scope.query = Math.round(new Date(_query_).getTime());
+
+    var _anu_ = new Date();
+    _anu_.setDate(_anu_.getDate() - 365);
+    $scope.anu = Math.round(new Date(_anu_).getTime());
 
     var d = new Date();
     d.setHours(d.getHours() - 1);
@@ -580,7 +686,7 @@ app.controller('main_report',function($scope,$location){
     $scope.daily = Math.round(new Date(_d_).getTime());
 
     /**/
-    get_data($scope.prev_date)
+    get_data($scope.hourly)
     /**/
     $(document).on('change','.report_select',function(){
         var $this = $(this).val()
@@ -599,12 +705,17 @@ app.controller('main_report',function($scope,$location){
         {
             get_data($scope.query)
         }
-        else{
+        if($this == 'Monthly'){
             get_data($scope.month)
+        }
+        if($this == 'Annually'){
+            get_data($scope.anu)
         }
     })
 
     function get_data(x){
+        var _array_  = [];
+        var _list_count_  = [];
         firebase.database().ref().child('track').on('value',function(data){
             var _i_ = 0;
             var _j_ = 0;
@@ -615,8 +726,10 @@ app.controller('main_report',function($scope,$location){
             $scope.list = data.val();
             for(var _x_  in $scope.list){
                 if($scope.list[_x_].sub_date >= x){
-                    /*if($scope.id == $scope.list[_x_].hotel_id)
-                    {*/
+                    _array_.push($scope.list[_x_].hotel_id)
+                    if($scope.list[_x_].hotel_id){
+                        _array_.push($scope.list[_x_].hotel_id)
+                    }
                     if($scope.list[_x_].sub_date != "-" && $scope.list[_x_].sub_date != "Pending"){
                         _i_ ++;
                     }
@@ -633,11 +746,19 @@ app.controller('main_report',function($scope,$location){
                         _amo_ = _amo_ + $scope.list[_x_].ammount
                     }
                     /*}*/
-                }
-                if($scope.list[_x_].reject == "-" || $scope.list[_x_].reject == ""){
-                    _miss_ = _miss_ + $scope.list[_x_].ammount
+                    if($scope.list[_x_].reject == "-" || $scope.list[_x_].reject == ""){
+                        _miss_ = _miss_ + $scope.list[_x_].ammount
+                    }
                 }
             }
+            var result = { };
+            for(var i = 0; i < _array_.length; ++i) {
+                if(!result[_array_[i]])
+                    result[_array_[i]] = 0;
+                ++result[_array_[i]];
+            }
+            $scope.result = result
+            /*console.log(_array_)*/
             $scope.$watch(function(){
                 $scope.totle_ammount = _i_;
                 $scope.accepted = _j_;
@@ -649,4 +770,15 @@ app.controller('main_report',function($scope,$location){
             $scope.$apply()
         })
     }
+
+    firebase.database().ref().child('hotel').once('value',function(data){
+        $scope.hotel_s = data.val();
+        $scope.$apply()
+    })
+    firebase.database().ref().child('select_count').once('value',function(data){
+        $scope.select_count = data.val()
+        $scope.$apply()
+    })
+
+
 })

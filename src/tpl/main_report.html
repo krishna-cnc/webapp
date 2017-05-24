@@ -6,11 +6,12 @@
         <div class="panel-heading">
             Report List
             <select class="report_select">
-                <option>Weekly</option>
-                <option>Daily</option>
-                <option>Monthly</option>
                 <option>Hourly</option>
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
                 <option>Quarterly</option>
+                <option>Annually</option>
             </select>
         </div>
         <div class="table-responsive">
@@ -60,6 +61,27 @@
                     <tbody>
                         <tr class="h_list">
                             <td>{{_miss_ | number: 2}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default top_city">
+            <div class="panel-heading">
+                Total Number of times Hotel is selected
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped b-t b-b" ng-repeat="(key, z) in result track by $index">
+                    <tbody>
+                        <tr class="h_list total_selected">
+                            <td ng-repeat="x in hotel_s" ng-if="key == x.h_id">
+                                <span>
+                                    {{x.Name}}
+                                </span>
+                                <span>
+                                    :  {{z}}
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

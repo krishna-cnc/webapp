@@ -5296,7 +5296,8 @@ a.text-#000000:hover {
 .overlay .popup button{border-radius: 5px; background: #4b0648; padding:10px 15px; color: #fff; display: inline-block; border: none; display: inline-block; margin-right: 20px; min-width: 120px}
 .overlay .popup button + button{margin-right: 0;}
 .admin_list h2{color: #4b0648; font-size: 25px;}
-.admin_list p{margin: 0; font-size: 15px;}
+.admin_list p{margin: 0; font-size: 15px; padding-bottom: 15px;}
+.admin_list p span{display: inline-block; width: 350px;}
 .report{font-size: 20px; display: inline-block; margin-left: 10px;}
 .report_select{display: inline-block; float: right; border-radius: 0 !important; width: 100px; background: #fff; height: 30px; vertical-align: top; margin-top: -5px;}
 .dis_btn img{width: 20px; border-radius: 50%; margin-right: 4px;}
@@ -5305,3 +5306,13 @@ a.text-#000000:hover {
 .h_list.total_selected span{width: 70%; display: inline-block; float: left;}
 .h_list.total_selected span + span{width: 30%;}
 .top_city{width: 30%; float: left; margin-right: 20px;}
+
+.ng-admin .navi .nav{display: none !important; }
+.admin_user ,.ng-admin .new_admin ,.ng-admin .admin_list ,.user_data,.ng-admin .for_admin{display: none!important; }
+.ng-admin .admin_user ,.ng-admin .user_data{display: block !important; }
+
+.admin_user {padding-top: 15px;}
+.admin_user li{ font-size: 16px; list-style: none; margin-bottom: 13px;}
+.admin_user li i{margin-right: 10px;}
+.admin_user li a{ font-size: 16px;}
+.dec{opacity: .5 !important; pointer-events: none !important;}
